@@ -4,6 +4,7 @@
 
 # The Script need administrator permissions and the access keys, please find and edit all of the keyword "----REPLACE----"
 
+#install terraform
 # test the code
 terraform plan
 
