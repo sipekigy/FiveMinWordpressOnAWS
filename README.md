@@ -3,7 +3,7 @@
 
 <div class=WordSection1>
 
-<p class=MsoNormal># <span class=SpellE>FiveMinWordpressOnAWS</span><o:p></o:p></p>
+<p class=MsoNormal># <span class=SpellE><b>FiveMinWordpressOnAWS</b></span><o:p></o:p></p>
 
 <p class=MsoNormal># <span class=GramE>personal</span> blog project translated
 to <span class=SpellE>TerraForm</span> code, just for fun.<o:p></o:p></p>
