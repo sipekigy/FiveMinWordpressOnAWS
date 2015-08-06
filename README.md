@@ -5,12 +5,12 @@ The Script need administrator permissions and the access keys, please find and e
 
  
 
-##install <a href="https://www.terraform.io">Terraform</a>
+##Install <a href="https://www.terraform.io">Terraform</a>
 
-###test the code
+###Test the code
 terraform plan
 
-###deploy or upgrade the environment
+###Deploy or upgrade the environment
 terraform apply
 
  
