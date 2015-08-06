@@ -39,21 +39,55 @@ variable "PubSub_cidr_block" {
 variable "PrivSub_cidr_block" {
   default = {
     PrivSub1 = "10.250.3.0/24"
-#    PrivSub2 = "10.250.4.0/24"
+    PrivSub2 = "10.250.4.0/24"
   }
 }
-
-## Security Groups
-# The security groups have a central configuration file the XXX_SGs.tf, please check it
-
 
 
 ## SSH key information
 # best to use the console to generate the key... terraform only supports key import/export through aws_key_pair resources
 # https://www.terraform.io/docs/providers/aws/r/key_pair.html
 
-variable "general-key" {
+variable "general_key" {
+  default = "GeneralKey"
+}
+
+
+#####################Need some wordpress specific settings#############################################
+##Database settings
+
+variable "db_name" {
+  default = "wordpress"
+}
+
+variable "db_username" {
+  default = "wpuser"
+}
+
+#Change the password
+variable "db_password" {
   default = "----REPLACE----"
 }
 
+#DB size GB
+variable "db_size" {
+  default = "5"
+}
+
+
+##Domain Configuration
+# please go to console and check the created name servers and update your dns provider records.
+variable "domain_name" {
+  default = "----REPLACE----"
+}
+
+
+##FTP settings
+variable "ftp_user" {
+  default = "wpftp"
+}
+
+variable "ftp_pass" {
+  default = "----REPLACE----"
+}
 

@@ -1,4 +1,12 @@
 #!/bin/bash
+
+FTPUSER=${ftp_user}
+FTPPASS=${ftp_pass}
+DBADDRESS=${db_address}
+DBNAME=${db_name}
+DBUSERNAME=${db_user}
+DBPASS=${db_pass}
+
 yum update -y
 yum install -y mc htop iotop vim screen
 yum install -y httpd php php-mysql php-gd vsftpd
@@ -37,11 +45,8 @@ setsebool -P httpd_can_connect_ftp 1
 setsebool -P ftpd_full_access 1
 systemctl restart  vsftpd.service
 
-adduser -d /var/www wordpress
-#----REPLACE----
-echo "----FTPUSER----:----FTPPASSWORD----" |chpasswd
-
-
+adduser -d /var/www $FTPUSER
+echo "$FTPUSER:$FTPPASS" |chpasswd
 
 echo "
 <?php
@@ -58,15 +63,15 @@ echo "
 
 
 /* MySQL settings */
-define( 'DB_NAME',     '----REPLACE----' );
-define( 'DB_USER',     '----REPLACE----' );
-define( 'DB_PASSWORD', '----REPLACE----' );
-define( 'DB_HOST',     '----REPLACE----' );
+define( 'DB_NAME',     '$DBNAME' );
+define( 'DB_USER',     '$DBUSERNAME' );
+define( 'DB_PASSWORD', '$DBPASS' );
+define( 'DB_HOST',     '$DBADDRESS' );
 define( 'DB_CHARSET',  'utf8' );
 
 
 /* MySQL database table prefix. */
-$table_prefix = 'wp_';
+\$table_prefix = 'wp_';
 
 
 /* WordPress Localized Language. */
@@ -75,7 +80,7 @@ define( 'WPLANG', '' );
 
 /* Absolute path to the WordPress directory. */
 if ( !defined('ABSPATH') )
-	define('ABSPATH', dirname(__FILE__) . '/');
+        define('ABSPATH', dirname(__FILE__) . '/');
 
 /* Sets up WordPress vars and included files. */
 require_once(ABSPATH . 'wp-settings.php');
@@ -83,8 +88,10 @@ require_once(ABSPATH . 'wp-settings.php');
 
 curl https://api.wordpress.org/secret-key/1.1/salt/ >> /var/www/html/wp-config.php
 
+
+
 echo "define( 'FTP_BASE', '/html' );" >>$WBASE/wp-config.php
 echo "define('FTP_CONTENT_DIR', '/html/wp-content');" >>$WBASE/wp-config.php
 
-chown -R wordpress $WBASE
+chown -R $FTPUSER $WBASE
 
