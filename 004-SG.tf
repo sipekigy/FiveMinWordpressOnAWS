@@ -6,7 +6,7 @@ resource "aws_security_group" "ManageMeSg" {
     from_port = 22
     to_port = 22
     protocol = "tcp"
-    cidr_blocks = ["87.192.24.194/32", "89.101.58.54/32"]
+    cidr_blocks = ["0.0.0.0/0"]
   }
 
   vpc_id = "${aws_vpc.webhosting.id}"
