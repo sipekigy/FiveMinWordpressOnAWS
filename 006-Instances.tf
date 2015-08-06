@@ -11,22 +11,26 @@ resource "aws_instance" "Web1" {
   tags {
         Name = "Web1"
   }
+
 }
 
 # Template for initial configuration bash script
 resource "template_file" "wpsettings" {
-   filename = "scripts/WebDefault.sh"
-   vars {
-     db_address = "${aws_db_instance.default.address}"
-     db_name = "${var.db_name}"
-     db_user = "${var.db_username}"
-     db_pass = "${var.db_pass}"
-     ftp_user = "${var.ftp_user}"
-     ftp_pass = "${var.ftp_pass}"
-   }
+  filename = "scripts/WebDefault.sh"
+  vars {
+    db_address = "${aws_db_instance.default.address}"
+    db_name = "${var.db_name}"
+    db_user = "${var.db_username}"
+    db_pass = "${var.db_pass}"
+    ftp_user = "${var.ftp_user}"
+    ftp_pass = "${var.ftp_pass}"
+  }
 }
 
-######################NetworkInterface Bug :(##############################
+
+
+
+######################NetworkInterfaces##############################
 #resource "aws_network_interface" "WebIf1" {
 #  subnet_id = "${aws_subnet.PubSub1.id}"
 #  security_groups = ["${aws_security_group.WebSg.id}", "${aws_security_group.ManageMeSg.id}"]
