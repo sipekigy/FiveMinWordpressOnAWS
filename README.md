@@ -16,9 +16,9 @@ terraform apply
  
 
 ### Create graphs
-apt-get install graphviz
-sudo apt-get install graphviz
-terraform graph | dot -Tpng >graph.png
+- apt-get install graphviz
+- sudo apt-get install graphviz
+- terraform graph | dot -Tpng >graph.png
 
  
 
