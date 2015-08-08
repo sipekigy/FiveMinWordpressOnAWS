@@ -48,43 +48,13 @@ systemctl restart  vsftpd.service
 adduser -d /var/www $FTPUSER
 echo "$FTPUSER:$FTPPASS" |chpasswd
 
-echo "
-<?php
-/**
- * Custom WordPress configurations on "wp-config.php" file.
- *
- * This file has the following configurations: MySQL settings, Table Prefix, Secret Keys, WordPress Language, ABSPATH and more.
- * For more information visit {@link https://codex.wordpress.org/Editing_wp-config.php Editing wp-config.php} Codex page.
- * Created using {@link http://generatewp.com/wp-config/ wp-config.php File Generator} on GenerateWP.com.
- *
- * @package WordPress
- * @generator GenerateWP.com
- */
+cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+sed -i~ "s/database_name_here/$DBNAME/g" /var/www/html/wp-config.php
+sed -i "s/username_here/$DBUSERNAME/g" /var/www/html/wp-config.php
+sed -i "s/password_here/$DBPASS/g" /var/www/html/wp-config.php
+sed -i "s/localhost/$DBADDRESS/g" /var/www/html/wp-config.php
+sed -i "s/put your unique phrase here/d" /var/www/html/wp-config.php
 
-
-/* MySQL settings */
-define( 'DB_NAME',     '$DBNAME' );
-define( 'DB_USER',     '$DBUSERNAME' );
-define( 'DB_PASSWORD', '$DBPASS' );
-define( 'DB_HOST',     '$DBADDRESS' );
-define( 'DB_CHARSET',  'utf8' );
-
-
-/* MySQL database table prefix. */
-\$table_prefix = 'wp_';
-
-
-/* WordPress Localized Language. */
-define( 'WPLANG', '' );
-
-
-/* Absolute path to the WordPress directory. */
-if ( !defined('ABSPATH') )
-        define('ABSPATH', dirname(__FILE__) . '/');
-
-/* Sets up WordPress vars and included files. */
-require_once(ABSPATH . 'wp-settings.php');
-" > /var/www/html/wp-config.php
 
 curl https://api.wordpress.org/secret-key/1.1/salt/ >> /var/www/html/wp-config.php
 
