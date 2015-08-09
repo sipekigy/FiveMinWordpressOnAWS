@@ -1,7 +1,8 @@
 # FiveMinWordpressOnAWS
 Personal blog project translated to TerraForm code, just for fun.
+Centos7 ami, latest wordpress, vsftpd, selinux rules
 
-The Script need administrator permissions and the access keys, please find and edit all of the keyword "----REPLACE----"
+The script need power user permission on AWS and the access keys, please find and edit all of the keyword "----REPLACE----"
 
  
 
