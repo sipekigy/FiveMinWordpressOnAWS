@@ -7,7 +7,8 @@ DBNAME=${db_name}
 DBUSERNAME=${db_user}
 DBPASS=${db_pass}
 
-yum update -y
+yum install epel-release -y
+yum repolist
 yum install -y mc htop iotop vim screen
 yum install -y httpd php php-mysql php-gd vsftpd
 
@@ -45,7 +46,7 @@ setsebool -P httpd_can_connect_ftp 1
 setsebool -P ftpd_full_access 1
 systemctl restart  vsftpd.service
 
-adduser -d /var/www $FTPUSER
+adduser -d /var/www -M $FTPUSER
 echo "$FTPUSER:$FTPPASS" |chpasswd
 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
@@ -53,15 +54,21 @@ sed -i~ "s/database_name_here/$DBNAME/g" /var/www/html/wp-config.php
 sed -i "s/username_here/$DBUSERNAME/g" /var/www/html/wp-config.php
 sed -i "s/password_here/$DBPASS/g" /var/www/html/wp-config.php
 sed -i "s/localhost/$DBADDRESS/g" /var/www/html/wp-config.php
-sed -i "s/put your unique phrase here/d" /var/www/html/wp-config.php
+sed -i "s/utf8/utf8mb4/g" /var/www/html/wp-config.php
+sed -i "/put your unique phrase here/d" /var/www/html/wp-config.php
+sed -i "/^require_once/d" /var/www/html/wp-config.php
+sed -i "/^M//g" /var/www/html/wp-config.php
 
 
 curl https://api.wordpress.org/secret-key/1.1/salt/ >> /var/www/html/wp-config.php
+echo "require_once(ABSPATH . 'wp-settings.php');" >> /var/www/html/wp-config.php
 
 
 
-echo "define( 'FTP_BASE', '/html' );" >>$WBASE/wp-config.php
+echo "define('FTP_BASE', '/html');" >>$WBASE/wp-config.php
 echo "define('FTP_CONTENT_DIR', '/html/wp-content');" >>$WBASE/wp-config.php
 
 chown -R $FTPUSER $WBASE
 
+
+yum update -y
